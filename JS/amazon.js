@@ -94,7 +94,7 @@ products.forEach((product) => {
           </div>
 
           <div class="product-quantity-container">
-            <select>
+            <select class = "selectedQuantity">
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -110,7 +110,7 @@ products.forEach((product) => {
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart" >
             <img src="images/icons/checkmark.png">
             Added
           </div>
@@ -125,19 +125,16 @@ products.forEach((product) => {
 });
 document.querySelector('.products-grid').innerHTML = productHtml;
 
-function updateCart(){
-  let totalQuantity = 0;
-   cart.forEach((Cart) =>{
-          totalQuantity += Cart.quantity;
-        }) 
-        document.querySelector('.cart-quantity').innerText = totalQuantity;
-
-}
-
 document.querySelectorAll('.add-to-cart-button').forEach((button) =>{
   
   button.addEventListener('click', (btn)=>{
+    let selectedQuantity = 1;
+
     const clickedId = button.dataset.productId;
+    const productContainer = button.closest(".product-container")
+    selectedQuantity = productContainer.querySelector(".selectedQuantity").value;
+    let selectedNumber = Number(selectedQuantity);
+
 
    let clickedProduct;
      clickedProduct = products.find(p =>{
@@ -145,20 +142,17 @@ document.querySelectorAll('.add-to-cart-button').forEach((button) =>{
     })
        let cartItem = cart.find(item =>item.productId===clickedProduct.id);
         if(cartItem){
-          cartItem.quantity += 1;
+          cartItem.quantity += selectedNumber;
           
         }
         else{
           cart.push({
             productId : clickedId,
-            quantity:1
+            quantity: selectedNumber
           })
         }
         
-              
-        console.log(cart)
-        console.log(cart[0].quantity);
-        updateCart();
+            
   })
 
 })

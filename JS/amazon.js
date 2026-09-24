@@ -1,72 +1,6 @@
-// const products = [
-//     {
-//         image: 'images/products/athletic-cotton-socks-6-pairs.jpg',
-//         name: 'Black Nigger',
-//         rating: {
-//             stars: 4.5,
-//             count: 87
-//         },
-//         priceCents: 1090,
-//     },
-//     {
-//         image: 'images/products/intermediate-composite-basketball.jpg',
-//         name: 'Intermediate Size Basketball',
-//         rating: {
-//             stars: 4,
-//             count: 127
-//         },
-//         priceCents: 2095,
-//     },
-//     {
-//         image: 'images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg',
-//         name: 'Adults Plain Cotton T-Shirt - 2 Pack',
-//         rating: {
-//             stars: 4.5,
-//             count: 56
-//         },
-//         priceCents: 799,
-//     },
-//     {
-//     image: "images/products/black-2-slot-toaster.jpg",
-//     name: "2 Slot Toaster - Black",
-//     rating: {
-//       stars: 5,
-//       count: 2197
-//     },
-//     priceCents: 1899,
-//   },
-//   {
-//     image: "images/products/6-piece-white-dinner-plate-set.jpg",
-//     name: "6 Piece White Dinner Plate Set",
-//     rating: {
-//       stars: 4,
-//       count: 37
-//     },
-//     priceCents: 2067,
-   
-//   },
-//   {
-//     image: "images/products/6-piece-non-stick-baking-set.webp",
-//     name: "6-Piece Nonstick, Carbon Steel Oven Bakeware Baking Set",
-//     rating: {
-//       stars: 4.5,
-//       count: 175
-//     },
-//     priceCents: 3499,
-   
-//   },
-//   {
-//     image: "images/products/plain-hooded-fleece-sweatshirt-yellow.jpg",
-//     name: "Plain Hooded Fleece Sweatshirt",
-//     rating: {
-//       stars: 4.5,
-//       count: 317
-//     },
-//     priceCents: 2400,
-//   }
-   
-    
-// ];
+import { cart, updateCart } from '../data/cart.js';
+import { products } from '../data/products.js';
+
 let productHtml = "";
 products.forEach((product) => {
     productHtml += `
@@ -130,12 +64,17 @@ document.querySelectorAll('.add-to-cart-button').forEach((button) =>{
   button.addEventListener('click', (btn)=>{
     let selectedQuantity = 1;
 
-    const clickedId = button.dataset.productId;
     const productContainer = button.closest(".product-container")
     selectedQuantity = productContainer.querySelector(".selectedQuantity").value;
+    const addedMessage = productContainer.querySelector(".added-to-cart")
+
+    addedMessage.classList.add("added-to-cart-Message");
+    setTimeout(function(){
+    addedMessage.classList.remove("added-to-cart-Message")
+                          },2000);
     let selectedNumber = Number(selectedQuantity);
 
-
+    const clickedId = button.dataset.productId;
    let clickedProduct;
      clickedProduct = products.find(p =>{
       return p.id === clickedId;
@@ -151,7 +90,10 @@ document.querySelectorAll('.add-to-cart-button').forEach((button) =>{
             quantity: selectedNumber
           })
         }
+        updateCart();
+        console.log(cart);
         
+
             
   })
 

@@ -1,5 +1,6 @@
-const cart =[];
-function updateCart(){
+
+export let cart =[];
+export function updateCart(){
   let totalQuantity = 0;
    cart.forEach((Cart) =>{
           totalQuantity += Cart.quantity;

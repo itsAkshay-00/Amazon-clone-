@@ -1,13 +1,12 @@
-import { products } from "../data/produc  ts.js";
-import { cart } from '../data/cart.js';
+import { products } from "../data/products.js";
+import { cart, removeFromCart } from '../data/cart.js';
 
-let cartContainer = document.querySelector('.order-summary');
- let cartHtml = "";
-cart.forEach((cartItem) => {
-
-   
-   let Product = products.find(p =>{
-        return p.id === cartItem.id
+function displayCart(newCart) {
+  let cartContainer = document.querySelector('.order-summary');
+  let cartHtml = "";
+  newCart.forEach((cartItem) => {
+    let Product = products.find(p => {
+      return p.id === cartItem.productId
     })
     cartHtml += ` 
     <div class="cart-item-container">
@@ -33,7 +32,7 @@ cart.forEach((cartItem) => {
                   <span class="update-quantity-link link-primary">
                     Update
                   </span>
-                  <span class="delete-quantity-link link-primary js-delete-link">
+                  <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${Product.id}">
                     Delete
                   </span>
                 </div>
@@ -87,6 +86,18 @@ cart.forEach((cartItem) => {
           </div>
           `
 
-});
-cartContainer.innerHTML = cartHtml;
-console.log(cart);
+  })
+  cartContainer.innerHTML = cartHtml;
+  document.querySelectorAll('.js-delete-link').forEach((link) => {
+    link.addEventListener('click', () => {
+      const productId = link.dataset.productId;
+      removeFromCart(productId);
+      displayCart(cart);
+    })
+  })
+};
+displayCart(cart);
+
+
+
+

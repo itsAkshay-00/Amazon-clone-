@@ -91,11 +91,8 @@ document.querySelectorAll('.add-to-cart-button').forEach((button) =>{
           })
         }
         updateCart();
-        console.log(cart);
-        
-
-            
   })
+});
 
-})
+updateCart();
 

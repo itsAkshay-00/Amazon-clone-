@@ -6,7 +6,6 @@ console.log(dayjs().add(5,'day').format('DD/MM/YYYY'));
 
 const today = dayjs();
 const DeliveryDate = today.add(7,'day').format('dddd D');
-console.log(DeliveryDate);
 
 function displayCart(newCart) {
   let cartContainer = document.querySelector('.order-summary');

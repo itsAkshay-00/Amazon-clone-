@@ -1,12 +1,19 @@
 import { products } from "../data/products.js";
 import { cart, removeFromCart } from '../data/cart.js';
+hello();
+
+console.log(dayjs().add(5,'day').format('DD/MM/YYYY'));
+
+const today = dayjs();
+const DeliveryDate = today.add(7,'day').format('dddd D');
+console.log(DeliveryDate);
 
 function displayCart(newCart) {
   let cartContainer = document.querySelector('.order-summary');
   let cartHtml = "";
   newCart.forEach((cartItem) => {
     let Product = products.find(p => {
-      return p.id === cartItem.productId
+      return p.id === cartItem.productId  
     })
     cartHtml += ` 
     <div class="cart-item-container">
@@ -23,7 +30,7 @@ function displayCart(newCart) {
                 ${Product.name}    
                 </div>
                 <div class="product-price">
-                  ${Product.price}
+                  $${(Product.priceCents / 100).toFixed(2)}
                 </div>
                 <div class="product-quantity">
                   <span>
@@ -31,6 +38,10 @@ function displayCart(newCart) {
                   </span>
                   <span class="update-quantity-link link-primary">
                     Update
+                  </span>
+                  <span class="update-quantity-input-container">
+                  <input type = "number" class = "update-quantity-input css-update-quantity js-update-quantity"
+                  quantity = "${cartItem.quantity}" data-product-id="${Product.id}">
                   </span>
                   <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${Product.id}">
                     Delete
